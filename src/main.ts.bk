@@ -1,0 +1,30 @@
+import Scanner from "./Scanner";
+import Token from "./types/Token";
+
+const readline = require("readline");
+
+const main = async () => {
+  const repl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const scanner = new Scanner();
+  process.stdout.write(")> ");
+  repl.on("line", (line: string) => {
+    run(line);
+  });
+
+  const run = (line: string) => {
+    scanner.setSource(line);
+    const tokenList: Token[] = scanner.scanTokens(line);
+
+    for (const token of tokenList) {
+      console.log(token);
+    }
+
+    process.stdout.write(")> ");
+  };
+};
+
+main();
