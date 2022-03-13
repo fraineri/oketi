@@ -1,0 +1,46 @@
+{
+  "editor.fontSize": 20,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-1.8",
+      "path": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.292.10-hotspot",
+      "default": true
+    }
+  ],
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "editor.minimap.enabled": false,
+  "workbench.iconTheme": "vscode-icons",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.eol": "\n",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "solidity.compileUsingRemoteVersion": "v0.4.25",
+  "tabnine.experimentalAutoImports": true,
+  "yaml.schemas": {
+    "file:///c%3A/Users/frain/.vscode/extensions/atlassian.atlascode-2.10.9/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "editor.formatOnSave": true,
+}
