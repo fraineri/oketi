@@ -3,6 +3,8 @@ import TokenType from "../src/enum/TokenType";
 import Token from "../src/Token";
 
 describe("Token tests", () => {
+  describe("");
+
   it("Should be able to create token with expected properties but without literal value.", () => {
     // Arrange
     const expectedType = TokenType.PLUS;

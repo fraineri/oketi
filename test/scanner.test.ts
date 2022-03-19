@@ -46,15 +46,27 @@ describe("Scanner", () => {
   it("Should be able to move foward source code.", () => {
     // Arrange
     const source = "my source code";
-    const expectedPeek = "y";
+    const expectedChar = "y";
 
     // Act
     scanner.load(source);
-    scanner.advance();
-    const actualPeek = scanner.peek();
+    const actualChar = scanner.advance();
 
     // Assert
-    expect(actualPeek).to.equal(expectedPeek);
+    expect(actualChar).to.equal(expectedChar);
+  });
+
+  it("Advance should return undefined if ", () => {
+    // Arrange
+    const source = "my source code";
+    const expectedChar = "y";
+
+    // Act
+    scanner.load(source);
+    const actualChar = scanner.advance();
+
+    // Assert
+    expect(actualChar).to.equal(expectedChar);
   });
 
   it("Should be able to add a new token to the list.", () => {
@@ -95,30 +107,31 @@ describe("Scanner", () => {
     expect(scanner.getTokenList()).to.have.lengthOf(0);
   });
 
-  //   describe("Token identification", () => {
-  //     describe("Single character token", () => {
-  //       it("Should be able to identify '(' token.", () => {
-  //         // Arrange
-  //         const source = "(";
-  //         const expectedTokenType = TokenType.LEFT_BRACE;
-  //         const expectedLexeme = "(";
-  //         const expectedLiteral = null;
-  //         const expectedLine = 0;
-  //         const expectedColumn = 0;
+  describe("Token identification", () => {
+    describe("Single character token", () => {
+      it("Should be able to identify '(' token.", () => {
+        // Arrange
+        const source = "(";
+        const expectedTokenType = TokenType.LEFT_PAREN;
+        const expectedLexeme = "(";
+        const expectedLiteral = null;
+        const expectedLine = 0;
+        const expectedColumn = 0;
 
-  //         // Act
-  //         scanner.load(source);
-  //         const tokenList: Token[] = scanner.scan();
-  //         const actualToken = tokenList[0];
+        // Act
+        scanner.load(source);
+        scanner.scanToken();
+        const tokenList = scanner.getTokenList();
+        const actualToken = tokenList[0];
 
-  //         // Assert
-  //         expect(tokenList).to.have.lengthOf(1);
-  //         expect(tokenList[0].getType()).be.equal(expectedTokenType);
-  //         expect(tokenList[0].getLexeme()).be.equal(expectedLexeme);
-  //         expect(tokenList[0].getLiteral()).be.equal(expectedLiteral);
-  //         expect(tokenList[0].getLine()).be.equal(expectedLine);
-  //         expect(tokenList[0].getColumn()).be.equal(expectedColumn);
-  //       });
-  //     });
-  //   });
+        // Assert
+        expect(tokenList).to.have.lengthOf(1);
+        expect(tokenList[0].getType()).be.equal(expectedTokenType);
+        expect(tokenList[0].getLexeme()).be.equal(expectedLexeme);
+        expect(tokenList[0].getLiteral()).be.equal(expectedLiteral);
+        expect(tokenList[0].getLine()).be.equal(expectedLine);
+        expect(tokenList[0].getColumn()).be.equal(expectedColumn);
+      });
+    });
+  });
 });

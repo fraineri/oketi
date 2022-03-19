@@ -24,17 +24,30 @@ export default class Scanner {
     return this.#source ? this.#source[this.#current] : undefined;
   }
 
-  advance(): void {
+  advance(): string | undefined {
+    const currentChar = this.#source?.charAt(this.#current);
     this.#current += 1;
+    return currentChar;
   }
 
-  // scan(): Token[] {
-  //   const currentChar = this.peek();
-  //   switch (currentChar) {
-  //     case "(":
-  //   }
-  //   return tokenList;
-  // }
+  scanTokens(): Token[] {
+    while (!this.isEOF()) {
+      this.scanToken();
+    }
+    return this.#tokenList;
+  }
+
+  scanToken(): void {
+    const currentChar = this.advance();
+    console.log("CURCH", currentChar);
+    switch (currentChar) {
+      case "(":
+        this.addToken(TokenType.LEFT_PAREN, null);
+        break;
+      default:
+        console.log("Unexpected character.");
+    }
+  }
 
   addToken(tokenType: TokenType, literal: any): void {
     if (!this.#source) return;
@@ -43,6 +56,10 @@ export default class Scanner {
     this.#tokenList.push(
       new Token(tokenType, lexeme, literal, this.#line, this.#start)
     );
+  }
+
+  isEOF(): boolean {
+    return !this.#source || this.#current >= this.#source.length;
   }
 
   getSource(): String | undefined {
