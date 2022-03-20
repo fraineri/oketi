@@ -42,6 +42,8 @@ export default class Token {
   }
 
   toString() {
-    return `${this.#type} ${this.#literal} ${this.#lexeme}`;
+    return `[${this.#type} ${this.#literal} ${this.#lexeme} ${this.#line} ${
+      this.#column
+    }]`;
   }
 }

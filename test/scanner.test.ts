@@ -3,7 +3,7 @@ import Scanner from "../src/Scanner";
 import Token from "../src/Token";
 import TokenType from "../src/enum/TokenType";
 
-describe("Scanner", () => {
+describe.skip("Scanner", () => {
   let scanner: Scanner;
   beforeEach(() => {
     scanner = new Scanner();
