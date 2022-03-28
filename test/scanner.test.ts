@@ -9,7 +9,7 @@ describe("Scanner", () => {
     scanner = new Scanner();
   });
 
-  it("Shall be able to load source code.", () => {
+  it("Scanner shall be able to load source code.", () => {
     // Arrange
     const source = "my source code";
 
@@ -20,7 +20,7 @@ describe("Scanner", () => {
     expect(scanner.getSource()).to.be.equal(source);
   });
 
-  it("Shall be able to peek current character.", () => {
+  it("Scanner shall be able to peek current character.", () => {
     // Arrange
     const source = "my source code";
     const expectedPeek = "m";
@@ -43,7 +43,7 @@ describe("Scanner", () => {
     expect(actualPeek).to.be.undefined;
   });
 
-  it("Shall be able to move foward source code.", () => {
+  it("Scanner shall be able to move foward source code.", () => {
     // Arrange
     const source = "my source code";
     const expectedChar = "y";
@@ -80,7 +80,7 @@ describe("Scanner", () => {
     expect(actualChar).to.be.undefined;
   });
 
-  it("Shall be able to add a new token to the list.", () => {
+  it("Scanner shall be able to add a new token to the list.", () => {
     // Arrange
     const expectedToken = new Token(
       TokenType.STRING,
@@ -108,7 +108,7 @@ describe("Scanner", () => {
     expect(actualToken.getColumn()).to.be.equal(expectedToken.getColumn());
   });
 
-  it("Shall return 'EOF' token when it reaches the end.", () => {
+  it("Scanner shall return 'EOF' token when it reaches the end.", () => {
     // Arrange
     const source = "";
     const expectedTokenType = TokenType.EOF;
@@ -124,9 +124,61 @@ describe("Scanner", () => {
     expect(actualTokenType).to.be.equal(expectedTokenType);
   });
 
+  describe("White space", () => {
+    it("Scanner shall change line on break line.", () => {
+      // Arrange
+      const source = "()\n<=";
+      const expectedLine = 1;
+
+      // Act
+      scanner.load(source);
+      scanner.scanTokens();
+
+      // Assert
+      expect(scanner.getLine()).to.equal(expectedLine);
+    });
+
+    it("Scanner shall skip white space.", () => {
+      // Arrange
+      const source = " \r \t \n ";
+
+      // Act
+      scanner.load(source);
+      const actualTokenList = scanner.scanTokens();
+
+      // Assert
+      expect(actualTokenList).to.have.lengthOf(1);
+    });
+
+    it("Scanner shall skip in line comments.", () => {
+      // Arrange
+      const source = "// ( )";
+
+      // Act
+      scanner.load(source);
+      const actualTokenList = scanner.scanTokens();
+
+      // Assert
+      expect(actualTokenList).to.have.lengthOf(1);
+    });
+
+    it("Scanner shall skip multiple line comments.", () => {
+      // Arrange
+      const source = "/*()\n[]*/";
+
+      // Act
+      scanner.load(source);
+      const actualTokenList = scanner.scanTokens();
+
+      // Assert
+      expect(actualTokenList).to.have.lengthOf(1);
+      expect(scanner.getLine()).to.be.equal(1);
+    });
+  });
+
   describe("Token identification", () => {
     describe("Single character token", () => {
-      it("Shall be able to identify 'LEFT_PAREN' token.", () => {
+      it("Scanner shall be able to identify 'LEFT_PAREN' token.", () => {
         // Arrange
         const source = "(";
         const expectedTokenType = TokenType.LEFT_PAREN;
@@ -148,7 +200,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'RIGHT_PAREN' token.", () => {
+      it("Scanner shall be able to identify 'RIGHT_PAREN' token.", () => {
         // Arrange
         const source = ")";
         const expectedTokenType = TokenType.RIGHT_PAREN;
@@ -170,7 +222,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'LEFT_BRACE' token.", () => {
+      it("Scanner shall be able to identify 'LEFT_BRACE' token.", () => {
         // Arrange
         const source = "{";
         const expectedTokenType = TokenType.LEFT_BRACE;
@@ -192,7 +244,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'RIGHT_BRACE' token.", () => {
+      it("Scanner shall be able to identify 'RIGHT_BRACE' token.", () => {
         // Arrange
         const source = "}";
         const expectedTokenType = TokenType.RIGHT_BRACE;
@@ -214,7 +266,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'COMMA' token.", () => {
+      it("Scanner shall be able to identify 'COMMA' token.", () => {
         // Arrange
         const source = ",";
         const expectedTokenType = TokenType.COMMA;
@@ -236,7 +288,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'DOT' token.", () => {
+      it("Scanner shall be able to identify 'DOT' token.", () => {
         // Arrange
         const source = ".";
         const expectedTokenType = TokenType.DOT;
@@ -258,7 +310,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'MINUS' token.", () => {
+      it("Scanner shall be able to identify 'MINUS' token.", () => {
         // Arrange
         const source = "-";
         const expectedTokenType = TokenType.MINUS;
@@ -280,7 +332,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'PLUS' token.", () => {
+      it("Scanner shall be able to identify 'PLUS' token.", () => {
         // Arrange
         const source = "+";
         const expectedTokenType = TokenType.PLUS;
@@ -302,7 +354,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'SEMICOLON' token.", () => {
+      it("Scanner shall be able to identify 'SEMICOLON' token.", () => {
         // Arrange
         const source = ";";
         const expectedTokenType = TokenType.SEMICOLON;
@@ -324,7 +376,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'SLASH' token.", () => {
+      it("Scanner shall be able to identify 'SLASH' token.", () => {
         // Arrange
         const source = "/";
         const expectedTokenType = TokenType.SLASH;
@@ -346,7 +398,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'STAR' token.", () => {
+      it("Scanner shall be able to identify 'STAR' token.", () => {
         // Arrange
         const source = "*";
         const expectedTokenType = TokenType.STAR;
@@ -370,7 +422,7 @@ describe("Scanner", () => {
     });
 
     describe("Single / Double character token", () => {
-      it("Shall be able to identify 'BANG' token.", () => {
+      it("Scanner shall be able to identify 'BANG' token.", () => {
         // Arrange
         const source = "!";
         const expectedTokenType = TokenType.BANG;
@@ -392,7 +444,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'BANG_EQUAL' token.", () => {
+      it("Scanner shall be able to identify 'BANG_EQUAL' token.", () => {
         // Arrange
         const source = "!=";
         const expectedTokenType = TokenType.BANG_EQUAL;
@@ -414,7 +466,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'EQUAL' token.", () => {
+      it("Scanner shall be able to identify 'EQUAL' token.", () => {
         // Arrange
         const source = "=";
         const expectedTokenType = TokenType.EQUAL;
@@ -436,7 +488,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'EQUAL_EQUAL' token.", () => {
+      it("Scanner shall be able to identify 'EQUAL_EQUAL' token.", () => {
         // Arrange
         const source = "==";
         const expectedTokenType = TokenType.EQUAL_EQUAL;
@@ -458,7 +510,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'GRATER' token.", () => {
+      it("Scanner shall be able to identify 'GRATER' token.", () => {
         // Arrange
         const source = ">";
         const expectedTokenType = TokenType.GRATER;
@@ -480,7 +532,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'GREATER_EQUAL' token.", () => {
+      it("Scanner shall be able to identify 'GREATER_EQUAL' token.", () => {
         // Arrange
         const source = ">=";
         const expectedTokenType = TokenType.GREATER_EQUAL;
@@ -502,7 +554,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'LESS' token.", () => {
+      it("Scanner shall be able to identify 'LESS' token.", () => {
         // Arrange
         const source = "<";
         const expectedTokenType = TokenType.LESS;
@@ -524,7 +576,7 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
 
-      it("Shall be able to identify 'LESS_EQUAL' token.", () => {
+      it("Scanner shall be able to identify 'LESS_EQUAL' token.", () => {
         // Arrange
         const source = "<=";
         const expectedTokenType = TokenType.LESS_EQUAL;
@@ -546,5 +598,54 @@ describe("Scanner", () => {
         expect(actualToken.getColumn()).be.equal(expectedColumn);
       });
     });
+
+    describe("Literals tokens", () => {
+      // it.only("Scanner shall be able to identify single int 'NUMBER' token.", () => {
+      //   // Arrange
+      //   const source = "6";
+      //   const expectedTokenType = TokenType.NUMBER;
+      //   const expectedLexeme = "6";
+      //   const expectedLiteral = 6;
+      //   const expectedLine = 0;
+      //   const expectedColumn = 0;
+      //   // Act
+      //   scanner.load(source);
+      //   const tokenList = scanner.scanTokens();
+      //   const actualToken = tokenList[0];
+      //   // Assert
+      //   expect(actualToken.getType()).be.equal(expectedTokenType);
+      //   expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+      //   expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+      //   expect(actualToken.getLine()).be.equal(expectedLine);
+      //   expect(actualToken.getColumn()).be.equal(expectedColumn);
+      // });
+      // it.only("Scanner shall be able to identify empty 'STRING' token.", () => {
+      //   // Arrange
+      //   const source = '""';
+      //   const expectedTokenType = TokenType.STRING;
+      //   const expectedLexeme = "";
+      //   const expectedLiteral = "";
+      //   const expectedLine = 0;
+      //   const expectedColumn = 0;
+      //   // Act
+      //   scanner.load(source);
+      //   const tokenList = scanner.scanTokens();
+      //   const actualToken = tokenList[0];
+      //   // Assert
+      //   expect(actualToken.getType()).be.equal(expectedTokenType);
+      //   expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+      //   expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+      //   expect(actualToken.getLine()).be.equal(expectedLine);
+      //   expect(actualToken.getColumn()).be.equal(expectedColumn);
+      // });
+    });
+    // it("Scanner shall be able to identify and skip comments.", () => {
+    //   // Arrange
+    //   const source = "//comment = () \n";
+
+    //   // Act
+
+    //   // Assert
+    // });
   });
 });

@@ -70,7 +70,31 @@ export default class Scanner {
         this.addToken(TokenType.SEMICOLON, null);
         break;
       case "/":
-        this.addToken(TokenType.SLASH, null);
+        if (this.peek() === "/") {
+          while (!this.isEOL()) {
+            this.advance();
+          }
+          this.#line += 1;
+        } else if (this.peek() === "*") {
+          let commentFlag = true;
+          while (commentFlag && !this.isEOF()) {
+            while (!this.isEOF() && this.peek() !== "*") {
+              if (this.peek() === "\n") {
+                this.#line += 1;
+              }
+              this.advance();
+            }
+            this.advance();
+            if (this.peek() === "/") {
+              commentFlag = false;
+              this.advance();
+            } else if (this.peek() === "\n") {
+              this.#line += 1;
+            }
+          }
+        } else {
+          this.addToken(TokenType.SLASH, null);
+        }
         break;
       case "*":
         this.addToken(TokenType.STAR, null);
@@ -107,6 +131,13 @@ export default class Scanner {
           this.addToken(TokenType.LESS, null);
         }
         break;
+      case " ":
+      case "\r":
+      case "\t":
+        break;
+      case "\n":
+        this.#line += 1;
+        break;
       default:
         console.log("Unexpected character.");
     }
@@ -125,11 +156,19 @@ export default class Scanner {
     return !this.#source || this.#current >= this.#source.length;
   }
 
+  isEOL(): boolean {
+    return this.isEOF() || this.peek() === "\n";
+  }
+
   getSource(): String | undefined {
     return this.#source;
   }
 
   getTokenList(): Token[] {
     return this.#tokenList;
+  }
+
+  getLine(): number {
+    return this.#line;
   }
 }
