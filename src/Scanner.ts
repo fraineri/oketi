@@ -138,6 +138,30 @@ export default class Scanner {
       case "\n":
         this.#line += 1;
         break;
+      case '"':
+        let newLineCounter = 0;
+        while (this.peek() !== '"' && !this.isEOF()) {
+          if (this.peek() === "\n") {
+            newLineCounter += 1;
+          }
+          this.advance();
+        }
+
+        if (this.isEOF()) {
+          console.log("ErrorRRR");
+          break;
+        }
+
+        this.advance();
+
+        this.addToken(
+          TokenType.STRING,
+          this.#source?.slice(this.#start + 1, this.#current - 1)
+        );
+
+        this.#line += newLineCounter;
+
+        break;
       default:
         console.log("Unexpected character.");
     }

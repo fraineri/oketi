@@ -600,31 +600,104 @@ describe("Scanner", () => {
     });
 
     describe("Literals tokens", () => {
+      describe("String", () => {
+        it("Scanner shall be able to identify empty 'STRING' token.", () => {
+          // Arrange
+          const source = '""';
+          const expectedTokenType = TokenType.STRING;
+          const expectedLexeme = '""';
+          const expectedLiteral = "";
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify single word 'STRING' token.", () => {
+          // Arrange
+          const source = '"example"';
+          const expectedTokenType = TokenType.STRING;
+          const expectedLexeme = '"example"';
+          const expectedLiteral = "example";
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify multiple words 'STRING' token.", () => {
+          // Arrange
+          const source = '"my string example"';
+          const expectedTokenType = TokenType.STRING;
+          const expectedLexeme = '"my string example"';
+          const expectedLiteral = "my string example";
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify multiple line 'STRING' token.", () => {
+          // Arrange
+          const source = '"my \n example"';
+          const expectedTokenType = TokenType.STRING;
+          const expectedLexeme = '"my \n example"';
+          const expectedLiteral = "my \n example";
+          const expectedLine = 0;
+          const expectedColumn = 0;
+          const expectedScannerLine = 1;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+          expect(scanner.getLine()).to.be.equal(expectedScannerLine);
+        });
+      });
+
       // it.only("Scanner shall be able to identify single int 'NUMBER' token.", () => {
       //   // Arrange
       //   const source = "6";
       //   const expectedTokenType = TokenType.NUMBER;
       //   const expectedLexeme = "6";
       //   const expectedLiteral = 6;
-      //   const expectedLine = 0;
-      //   const expectedColumn = 0;
-      //   // Act
-      //   scanner.load(source);
-      //   const tokenList = scanner.scanTokens();
-      //   const actualToken = tokenList[0];
-      //   // Assert
-      //   expect(actualToken.getType()).be.equal(expectedTokenType);
-      //   expect(actualToken.getLexeme()).be.equal(expectedLexeme);
-      //   expect(actualToken.getLiteral()).be.equal(expectedLiteral);
-      //   expect(actualToken.getLine()).be.equal(expectedLine);
-      //   expect(actualToken.getColumn()).be.equal(expectedColumn);
-      // });
-      // it.only("Scanner shall be able to identify empty 'STRING' token.", () => {
-      //   // Arrange
-      //   const source = '""';
-      //   const expectedTokenType = TokenType.STRING;
-      //   const expectedLexeme = "";
-      //   const expectedLiteral = "";
       //   const expectedLine = 0;
       //   const expectedColumn = 0;
       //   // Act
