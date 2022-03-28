@@ -41,6 +41,8 @@ export default class Scanner {
 
   scanToken(): void {
     const currentChar = this.advance();
+    if (!this.#source) return;
+
     switch (currentChar) {
       case "(":
         this.addToken(TokenType.LEFT_PAREN, null);
@@ -163,7 +165,18 @@ export default class Scanner {
 
         break;
       default:
-        console.log("Unexpected character.");
+        if (this.isNumber(currentChar)) {
+          while (this.isNumber(this.peek())) {
+            this.advance();
+          }
+
+          this.addToken(
+            TokenType.NUMBER,
+            parseInt(this.#source.slice(this.#start, this.#current))
+          );
+        } else {
+          console.log("Unexpected character.");
+        }
     }
   }
 
@@ -182,6 +195,10 @@ export default class Scanner {
 
   isEOL(): boolean {
     return this.isEOF() || this.peek() === "\n";
+  }
+
+  isNumber(char: string | undefined): boolean {
+    return !!char && char >= "0" && char <= "9";
   }
 
   getSource(): String | undefined {
