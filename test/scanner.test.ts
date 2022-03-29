@@ -693,7 +693,7 @@ describe("Scanner", () => {
       });
 
       describe("Numbers", () => {
-        it("Scanner shall be able to identify single digit 'NUMBER' token.", () => {
+        it("Scanner shall be able to identify single int digit 'NUMBER' token.", () => {
           // Arrange
           const source = "7";
           const expectedTokenType = TokenType.NUMBER;
@@ -715,7 +715,7 @@ describe("Scanner", () => {
           expect(actualToken.getColumn()).be.equal(expectedColumn);
         });
 
-        it("Scanner shall be able to identify multiple digits 'NUMBER' token.", () => {
+        it("Scanner shall be able to identify multiple int digits 'NUMBER' token.", () => {
           // Arrange
           const source = "71253";
           const expectedTokenType = TokenType.NUMBER;
@@ -736,26 +736,29 @@ describe("Scanner", () => {
           expect(actualToken.getLine()).be.equal(expectedLine);
           expect(actualToken.getColumn()).be.equal(expectedColumn);
         });
+
+        it("Scanner shall be able to identify decimal 'NUMBER' token.", () => {
+          // Arrange
+          const source = "23.64";
+          const expectedTokenType = TokenType.NUMBER;
+          const expectedLexeme = "23.64";
+          const expectedLiteral = 23.64;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
       });
-      // it.only("Scanner shall be able to identify single int 'NUMBER' token.", () => {
-      //   // Arrange
-      //   const source = "6";
-      //   const expectedTokenType = TokenType.NUMBER;
-      //   const expectedLexeme = "6";
-      //   const expectedLiteral = 6;
-      //   const expectedLine = 0;
-      //   const expectedColumn = 0;
-      //   // Act
-      //   scanner.load(source);
-      //   const tokenList = scanner.scanTokens();
-      //   const actualToken = tokenList[0];
-      //   // Assert
-      //   expect(actualToken.getType()).be.equal(expectedTokenType);
-      //   expect(actualToken.getLexeme()).be.equal(expectedLexeme);
-      //   expect(actualToken.getLiteral()).be.equal(expectedLiteral);
-      //   expect(actualToken.getLine()).be.equal(expectedLine);
-      //   expect(actualToken.getColumn()).be.equal(expectedColumn);
-      // });
     });
     // it("Scanner shall be able to identify and skip comments.", () => {
     //   // Arrange

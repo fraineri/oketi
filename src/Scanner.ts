@@ -166,13 +166,20 @@ export default class Scanner {
         break;
       default:
         if (this.isNumber(currentChar)) {
-          while (this.isNumber(this.peek())) {
+          while (this.isNumber(this.peek()) || this.peek() === ".") {
             this.advance();
+          }
+
+          if (this.peek() === ".") {
+            this.advance();
+            while (this.isNumber(this.peek())) {
+              this.advance();
+            }
           }
 
           this.addToken(
             TokenType.NUMBER,
-            parseInt(this.#source.slice(this.#start, this.#current))
+            parseFloat(this.#source.slice(this.#start, this.#current))
           );
         } else {
           console.log("Unexpected character.");
