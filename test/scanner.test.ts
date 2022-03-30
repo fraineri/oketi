@@ -33,11 +33,49 @@ describe("Scanner", () => {
     expect(actualPeek).to.equal(expectedPeek);
   });
 
+  it("Scanner shall be able to peek by 'n' characters ahead of current position.", () => {
+    // Arrange
+    const n = 1;
+    const source = "my source code";
+    const expectedPeek = "y";
+
+    // Act
+    scanner.load(source);
+    const actualPeek = scanner.peekNext(n);
+
+    // Assert
+    expect(actualPeek).to.equal(expectedPeek);
+  });
+
   it("Peek shall return undefined if source is not loaded.", () => {
     // Arrange
 
     // Act
     const actualPeek = scanner.peek();
+
+    // Assert
+    expect(actualPeek).to.be.undefined;
+  });
+
+  it("PeekNext shall return undefined if source is not loaded.", () => {
+    // Arrange
+    const n = 1;
+
+    // Act
+    const actualPeek = scanner.peekNext(n);
+
+    // Assert
+    expect(actualPeek).to.be.undefined;
+  });
+
+  it("PeekNext shall return undefined if 'n' exceeds source.", () => {
+    // Arrange
+    const n = 2;
+    const source = "my";
+
+    // Act
+    scanner.load(source);
+    const actualPeek = scanner.peekNext(n);
 
     // Assert
     expect(actualPeek).to.be.undefined;
@@ -759,14 +797,360 @@ describe("Scanner", () => {
           expect(actualToken.getColumn()).be.equal(expectedColumn);
         });
       });
+
+      describe("Keywords", () => {
+        it("Scanner shall be able to identify 'AND' token.", () => {
+          // Arrange
+          const source = "and";
+          const expectedTokenType = TokenType.AND;
+          const expectedLexeme = "and";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'CLASS' token.", () => {
+          // Arrange
+          const source = "class";
+          const expectedTokenType = TokenType.CLASS;
+          const expectedLexeme = "class";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'ELSE' token.", () => {
+          // Arrange
+          const source = "else";
+          const expectedTokenType = TokenType.ELSE;
+          const expectedLexeme = "else";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'FALSE' token.", () => {
+          // Arrange
+          const source = "false";
+          const expectedTokenType = TokenType.FALSE;
+          const expectedLexeme = "false";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'FUN' token.", () => {
+          // Arrange
+          const source = "fun";
+          const expectedTokenType = TokenType.FUN;
+          const expectedLexeme = "fun";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'FOR' token.", () => {
+          // Arrange
+          const source = "for";
+          const expectedTokenType = TokenType.FOR;
+          const expectedLexeme = "for";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'IF' token.", () => {
+          // Arrange
+          const source = "if";
+          const expectedTokenType = TokenType.IF;
+          const expectedLexeme = "if";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'NIL' token.", () => {
+          // Arrange
+          const source = "nil";
+          const expectedTokenType = TokenType.NIL;
+          const expectedLexeme = "nil";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'OR' token.", () => {
+          // Arrange
+          const source = "or";
+          const expectedTokenType = TokenType.OR;
+          const expectedLexeme = "or";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'PRINT' token.", () => {
+          // Arrange
+          const source = "print";
+          const expectedTokenType = TokenType.PRINT;
+          const expectedLexeme = "print";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'RETURN' token.", () => {
+          // Arrange
+          const source = "return";
+          const expectedTokenType = TokenType.RETURN;
+          const expectedLexeme = "return";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'SUPER' token.", () => {
+          // Arrange
+          const source = "super";
+          const expectedTokenType = TokenType.SUPER;
+          const expectedLexeme = "super";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'THIS' token.", () => {
+          // Arrange
+          const source = "this";
+          const expectedTokenType = TokenType.THIS;
+          const expectedLexeme = "this";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'TRUE' token.", () => {
+          // Arrange
+          const source = "true";
+          const expectedTokenType = TokenType.TRUE;
+          const expectedLexeme = "true";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'VAR' token.", () => {
+          // Arrange
+          const source = "var";
+          const expectedTokenType = TokenType.VAR;
+          const expectedLexeme = "var";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+
+        it("Scanner shall be able to identify 'WHILE' token.", () => {
+          // Arrange
+          const source = "while";
+          const expectedTokenType = TokenType.WHILE;
+          const expectedLexeme = "while";
+          const expectedLiteral = null;
+          const expectedLine = 0;
+          const expectedColumn = 0;
+
+          // Act
+          scanner.load(source);
+          const tokenList = scanner.scanTokens();
+          const actualToken = tokenList[0];
+
+          // Assert
+          expect(actualToken.getType()).be.equal(expectedTokenType);
+          expect(actualToken.getLexeme()).be.equal(expectedLexeme);
+          expect(actualToken.getLiteral()).be.equal(expectedLiteral);
+          expect(actualToken.getLine()).be.equal(expectedLine);
+          expect(actualToken.getColumn()).be.equal(expectedColumn);
+        });
+      });
     });
-    // it("Scanner shall be able to identify and skip comments.", () => {
-    //   // Arrange
-    //   const source = "//comment = () \n";
-
-    //   // Act
-
-    //   // Assert
-    // });
   });
 });

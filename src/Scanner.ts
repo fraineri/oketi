@@ -7,6 +7,7 @@ export default class Scanner {
   #current: number;
   #line: number;
   #tokenList: Token[];
+  #hasError: boolean;
 
   constructor() {
     this.#source = undefined;
@@ -14,6 +15,7 @@ export default class Scanner {
     this.#current = 0;
     this.#line = 0;
     this.#tokenList = [];
+    this.#hasError = false;
   }
 
   load(source: String): void {
@@ -22,6 +24,14 @@ export default class Scanner {
 
   peek(): string | undefined {
     return this.#source ? this.#source[this.#current] : undefined;
+  }
+
+  peekNext(n: number): string | undefined {
+    if (!this.#source || n > this.#source.length - 1 - this.#current) {
+      return undefined;
+    }
+
+    return this.#source[this.#current + n];
   }
 
   advance(): string | undefined {
@@ -150,7 +160,6 @@ export default class Scanner {
         }
 
         if (this.isEOF()) {
-          console.log("ErrorRRR");
           break;
         }
 
@@ -166,12 +175,13 @@ export default class Scanner {
         break;
       default:
         if (this.isNumber(currentChar)) {
-          while (this.isNumber(this.peek()) || this.peek() === ".") {
+          while (this.isNumber(this.peek())) {
             this.advance();
           }
 
-          if (this.peek() === ".") {
+          if (this.peek() === "." && this.isNumber(this.peekNext(1))) {
             this.advance();
+
             while (this.isNumber(this.peek())) {
               this.advance();
             }
@@ -181,6 +191,49 @@ export default class Scanner {
             TokenType.NUMBER,
             parseFloat(this.#source.slice(this.#start, this.#current))
           );
+        } else if (this.isAlpha(currentChar)) {
+          while (this.isAlphaNumeric(this.peek())) {
+            this.advance();
+          }
+
+          switch (this.#source.slice(this.#start, this.#current)) {
+            case "and":
+              this.addToken(TokenType.AND, null);
+              break;
+            case "class":
+              this.addToken(TokenType.CLASS, null);
+              break;
+            case "else":
+              this.addToken(TokenType.ELSE, null);
+            case "false":
+              this.addToken(TokenType.FALSE, null);
+            case "fun":
+              this.addToken(TokenType.FUN, null);
+            case "for":
+              this.addToken(TokenType.FOR, null);
+            case "if":
+              this.addToken(TokenType.IF, null);
+            case "nil":
+              this.addToken(TokenType.NIL, null);
+            case "or":
+              this.addToken(TokenType.OR, null);
+            case "print":
+              this.addToken(TokenType.PRINT, null);
+            case "return":
+              this.addToken(TokenType.RETURN, null);
+            case "super":
+              this.addToken(TokenType.SUPER, null);
+            case "this":
+              this.addToken(TokenType.THIS, null);
+            case "true":
+              this.addToken(TokenType.TRUE, null);
+            case "var":
+              this.addToken(TokenType.VAR, null);
+            case "while":
+              this.addToken(TokenType.WHILE, null);
+            default:
+              break;
+          }
         } else {
           console.log("Unexpected character.");
         }
@@ -206,6 +259,19 @@ export default class Scanner {
 
   isNumber(char: string | undefined): boolean {
     return !!char && char >= "0" && char <= "9";
+  }
+
+  isAlpha(char: string | undefined): boolean {
+    return (
+      !!char &&
+      ((char >= "a" && char <= "z") ||
+        (char >= "A" && char <= "Z") ||
+        char == "_")
+    );
+  }
+
+  isAlphaNumeric(char: string | undefined): boolean {
+    return this.isNumber(char) || this.isAlpha(char);
   }
 
   getSource(): String | undefined {
