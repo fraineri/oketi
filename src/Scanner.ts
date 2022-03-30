@@ -232,6 +232,7 @@ export default class Scanner {
             case "while":
               this.addToken(TokenType.WHILE, null);
             default:
+              this.addToken(TokenType.IDENTIFIER, null);
               break;
           }
         } else {
