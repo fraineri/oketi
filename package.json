@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts'",
+    "test": "mocha 'test/**/*.test.ts'",
+    "test::cover": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts' -R dot",
     "start": "node ./build/main.js",
     "start::dev": "nodemon ./build/main.js -w",
     "start::debug": "nodemon ./build/main.js --inspect",
